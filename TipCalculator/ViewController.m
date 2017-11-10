@@ -10,19 +10,33 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *billAmountTextField;
+@property (weak, nonatomic) IBOutlet UILabel *tipAmountLabel;
+@property (weak, nonatomic) IBOutlet UITextField *tipPercentageTextField;
+@property (assign, nonatomic) NSInteger tipPercentageSlider;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    _tipPercentageTextField.text = [NSString stringWithFormat:@"15"];
+
+}
+
+- (IBAction)calculateTip:(id)sender {
+    
+    NSInteger tipAmount = [self.billAmountTextField.text integerValue] * self.tipPercentageSlider / 100;
+    self.tipAmountLabel.text = [NSString stringWithFormat:@"Tip amount: $%li", tipAmount];
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)adjustTipPercentage:(UISlider *)sender {
+    
+    self.tipPercentageSlider = sender.value;
+    self.tipPercentageTextField.text = [NSString stringWithFormat:@"%li", self.tipPercentageSlider];
+    
 }
 
 
